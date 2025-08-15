@@ -1,0 +1,7 @@
+{
+  "name": "com.cheems.framework",
+  "version": "0.1.0",
+  "displayName": "Cheems Unity Framework",
+  "description": "A set of Unity tools and framework utilities.",
+  "unity": "2022.3"
+}

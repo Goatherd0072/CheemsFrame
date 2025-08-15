@@ -1,0 +1,79 @@
+# =============== #
+# Unity 基础忽略项 #
+# =============== #
+
+# Unity 生成的临时文件夹（不需要进包）
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+
+# Unity Crash 生成文件
+sysinfo.txt
+
+# 自动生成的解决方案和工程文件（IDE 专用）
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+
+# VS/Rider 缓存
+.vscode/
+.idea/
+*.DotSettings
+*.DotSettings.user
+
+# Rider 编译缓存
+.gradle/
+.idea/
+
+# Unity 打包缓存
+[Bb]uild*/
+[Aa]sset[Bb]undles/
+[Aa]sset[Bb]undle[Cc]ache/
+
+# =============== #
+# Git 特殊忽略项  #
+# =============== #
+
+# 操作系统缓存文件
+.DS_Store
+Thumbs.db
+
+# 压缩/临时包文件
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+
+# =============== #
+# UPM 包特有部分  #
+# =============== #
+
+# 不要忽略 .meta 文件（Unity 资源引用需要它们）
+!*.meta
+
+# 不要忽略 package.json（UPM 必须）
+!package.json
+
+# 如果有 README/文档，保留
+!README.md
+!CHANGELOG.md
+!LICENSE
+!Documentation~/**
+
+# 如果有 Samples~，保留
+!Samples~/**
+
+# 保留 Runtime 和 Editor 下所有内容
+!Runtime/**
+!Editor/**
