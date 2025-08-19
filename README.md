@@ -23,6 +23,8 @@
 
 **[Easy Performant Outline](https://assetstore.unity.com/packages/vfx/shaders/fullscreen-camera-effects/easy-performant-outline-2d-3d-urp-hdrp-and-built-in-renderer-157187)**
 
+---
+
 ## 📚 参考与致谢
 
 以下项目为本框架提供了重要的参考与灵感（排名不分先后）：
@@ -36,3 +38,35 @@
 
 ---
 
+## 使用
+
+1. 目前没有一键配置的功能，先确保项目中有已经安装如下插件
+ ```toml
+Unity Package：
+Addressables  = 2.7.2
+
+Other Package:
+Odin Inspector and Serializer = 3.3.1.13
+Easy Performant Outline = 3.6.2
+DOTween = 1.2.765
+ ```
+2. 开启 DOTween 对 EPO的兼容，并添加 ASMDEF文件
+
+	<img src=".README/image-20250820005116968.png" alt="image-20250820005116968" style="zoom:25%;" />
+
+3. 通过git链接将此项目导入到UPM中
+
+	在unity package manager中输入
+
+	 `https://github.com/Goatherd0072/CheemsFrame.git`
+	
+	或在 根目录`Packages/manifest.json`文件中添加
+	
+	 `"com.cheems.framework": "https://github.com/Goatherd0072/CheemsFrame.git"`.
+
+
+
+
+
+
+---
