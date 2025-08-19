@@ -2,7 +2,7 @@
     "name": "CheemsFrame.Editor",
     "rootNamespace": "Cheems",
     "references": [
-        "GUID:7cf12c18a4de41f4093b3c3d6939e6eb"
+        "CheemsFrame.Runtime"
     ],
     "includePlatforms": [
         "Editor"

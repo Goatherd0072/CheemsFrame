@@ -25,7 +25,7 @@ namespace Cheems
         private IFSMOwner _owner;
 
         //当前状态机 所有的状态 Key:状态枚举的值 Value:具体的状态
-        private readonly Dictionary<Type, StateBase> _stateDic = new Dictionary<Type, StateBase>();
+        private readonly Dictionary<Type, StateBase> _stateDic = new();
 
         //状态机共享数据
         private Dictionary<string, object> _stateShareDataDic;
@@ -38,9 +38,7 @@ namespace Cheems
         /// <typeparam name="T">初始状态类型</typeparam>
         public void Init<T>(IFSMOwner owner, bool enableStateShareData = false) where T : StateBase, new()
         {
-            this._owner = owner;
-            if (enableStateShareData && _stateShareDataDic == null)
-                _stateShareDataDic = new Dictionary<string, object>();
+            Init(owner, enableStateShareData);
             ChangeState<T>();
         }
 
@@ -67,28 +65,14 @@ namespace Cheems
         public bool ChangeState<T>(bool reCurrentState = false) where T : StateBase, new()
         {
             Type stateType = typeof(T);
-            // 状态一致，并且不需要刷新状态，则切换失败
-            if (stateType == CurrStateType && !reCurrentState) return false;
 
-            // 退出当前状态
-            if (CurrStateObj != null)
-            {
-                CurrStateObj.Exit();
-            }
-
-            // 进入新状态
-            CurrStateObj = GetState<T>();
-            CurrStateType = stateType;
-            CurrStateObj.Enter();
-
-            return true;
+            return ChangeState(stateType, reCurrentState);
         }
 
         /// <summary>
         /// 切换状态
         /// </summary>
-        /// <typeparam name="T">具体要切换到的状态脚本类型</typeparam>
-        /// <param name="stateType"</param>
+        /// <param name="stateType">具体要切换到的状态脚本类型 </param>
         /// <param name="reCurrentState">新状态和当前状态一致的情况下，是否也要切换</param>
         /// <returns></returns>
         public bool ChangeState(Type stateType, bool reCurrentState = false)
@@ -98,15 +82,15 @@ namespace Cheems
             if (stateType == CurrStateType && !reCurrentState) return false;
 
             // 退出当前状态
-            if (CurrStateObj != null)
-            {
-                CurrStateObj.Exit();
-            }
+            CurrStateObj?.OnTransitionOut(stateType); // 过渡退出
 
             // 进入新状态
+            var oldStateType = CurrStateType;
             CurrStateObj = GetState(stateType);
             CurrStateType = stateType;
-            CurrStateObj.Enter();
+
+            // 过渡进入
+            CurrStateObj.OnTransitionIn(oldStateType);
 
             return true;
         }
@@ -182,7 +166,7 @@ namespace Cheems
             // 处理缓存中所有状态的逻辑
             foreach (var state in _stateDic.Values)
             {
-                state.UnInit();
+                state.Reset();
             }
 
             _stateDic.Clear();
