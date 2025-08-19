@@ -158,7 +158,7 @@ namespace Cheems
             // 处理当前状态的额外逻辑
             if (CurrStateObj != null)
             {
-                CurrStateObj.Exit();
+                CurrStateObj.OnTransitionOut(null);
                 CurrStateObj = null;
             }
 
@@ -178,32 +178,31 @@ namespace Cheems
 
         public bool TryGetShareData<T>(string key, out T data)
         {
-            bool res = _stateShareDataDic.TryGetValue(key, out object stateData);
-            if (res)
+            data = default(T);
+            if (_stateShareDataDic?.TryGetValue(key, out object stateData) is true)
             {
                 data = (T)stateData;
-            }
-            else
-            {
-                data = default(T);
+                return true;
             }
 
-            return res;
+            return false;
         }
 
         public void AddShareData(string key, object data)
         {
-            _stateShareDataDic.Add(key, data);
+            _stateShareDataDic ??= new Dictionary<string, object>();
+
+            _stateShareDataDic?.Add(key, data);
         }
 
         public bool RemoveShareData(string key)
         {
-            return _stateShareDataDic.Remove(key);
+            return _stateShareDataDic is not null && _stateShareDataDic.Remove(key);
         }
 
         public bool ContainsShareData(string key)
         {
-            return _stateShareDataDic.ContainsKey(key);
+            return _stateShareDataDic is not null && _stateShareDataDic.ContainsKey(key);
         }
 
         public bool UpdateShareData(string key, object data)
